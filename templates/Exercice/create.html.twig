@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {#{% form_theme artisteForm 'bootstrap_3_layout.html.twig' %}#}
+    {#Dans config/package/twig.yaml#}
+
+    {% if 'app_exercice_create' == currentRoute %}
+        <h3>Creation d'un nouvel exercice</h3>
+    {% elseif 'app_exercice_update' == currentRoute %}
+        <h3>Modification de l'exercice {{ exercice.name }}</h3>
+    {% endif %}
+
+    {{ form_start(exerciceForm) }}
+
+    {{ form_widget(exerciceForm) }}
+
+    <button class="btn btn-primary" type="submit">Envoyer</button>
+    {{ form_end(exerciceForm) }}
+
+{% endblock %}

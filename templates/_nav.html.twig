@@ -1,13 +1,51 @@
-{% set currentRoute = app.request.attributes.get('_route') %}
-
 
 
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
+
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">NASA</a>
+            <a class="navbar-brand" href="{{ path('app_navigation_home') }}">MyFitPlanner</a>
         </div>
+
         <ul class="nav navbar-nav">
+            {% if app.user %}
+
+
+                <li class="dropdown {{currentRoute starts with 'app_seance_' ? 'active' }}">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="{{ path('app_seance_read')}}">Seances
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{ path('app_seance_create') }}">Ajouter une séance</a></li>
+                        <li><a href="{{ path('app_seance_read') }}">Consulter mes séances</a></li>
+                    </ul>
+                </li>
+
+            {% endif %}
         </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            {% if app.user %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="dropdown {{'app_admin_read' == currentRoute ? 'active' }}">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="{{ path('app_admin_read')}}">Administration
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ path('app_admin_read')}}">Dashboard</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ path('app_exercice_create') }}">Ajout d'un exercice</a></li>
+                            <li><a href="{{ path('app_groupemusculaire_create') }}">Ajout d'un groupe musculaire</a></li>
+                            <li><a href="{{ path('app_muscle_create') }}">Ajout d'un muscle</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+                <li><a href="#">Connecté en tant que {{ app.user.name }}</a></li>
+                <li><a href="{{ path('app_user_logout') }}">Déconnexion</a></li>
+            {% else %}
+                <li class="{{   'app_user_signup' == currentRoute ? 'active' }}"><a href="{{ path('app_user_signup'   ) }}"    >Inscription</a></li>
+                <li class="{{   'app_user_signin' == currentRoute ? 'active' }}"><a href="{{ path('app_user_signin'   ) }}"    >Connexion</a></li>
+            {% endif %}
+        </ul>
+
+
     </div>
 </nav>

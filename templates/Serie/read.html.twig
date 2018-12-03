@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div>
+        <h2>Récapitulatif de la séance du {{ seance.date|date('d/m/Y') }}</h2>
+        <br>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Exercice</th>
+                <th>Charge</th>
+                <th>Repetition</th>
+                <th>Repos (secondes)</th>
+                <th colspan="2">
+
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set token = csrf_token('SERIE_DELETE') %}
+            {% for serie in series %}
+                <tr>
+                    <td>{{ serie.exercice.name }}</td>
+                    <td>{{ serie.charge }}</td>
+                    <td>{{ serie.repetition }}</td>
+                    <td>{{ serie.repos }}</td>
+                    <td>
+                        <a href="{{ path('app_serie_update', {"id":serie.id}) }}"
+                           class="btn btn-primary btn-xs">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('app_serie_delete', {"id":serie.id, "token":token}) }}"
+                           class="btn btn-danger btn-xs">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_serie_create', {"id":seance.id}) }}" class="btn btn-primary">Ajouter une série</a>
+    </div>
+{% endblock %}
+

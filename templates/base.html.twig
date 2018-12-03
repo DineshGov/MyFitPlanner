@@ -11,14 +11,12 @@
 </head>
 <body>
 <div class="col-lg-offset-1 col-lg-10 col-lg-offset-1">
+    {% set currentRoute = app.request.attributes.get('_route') %}
+    {{ include("_nav.html.twig") }}
 
     <div>
         {{ include('_flash.html.twig') }}
     </div>
-
-    {%  include("_nav.html.twig") %}
-
-
 
     {% block body %}
     {% endblock %}

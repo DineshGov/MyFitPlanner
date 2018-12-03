@@ -1,0 +1,49 @@
+<div>
+    <h2>Groupes musculaires</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Muscles</th>
+            <th colspan="2">
+                <a href="{{ path('app_groupemusculaire_create') }}">Creation</a>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% set tokenGroupeMusculaire = csrf_token('GROUPEMUSCULAIRE_DELETE') %}
+        {% for groupeMusculaire in groupesMusculaires %}
+            <tr>
+                <td>{{ groupeMusculaire.name }}</td>
+                <td>
+                    {% if groupeMusculaire.description %}
+                        {{ groupeMusculaire.description }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    <ul>
+                        {% for muscle in groupeMusculaire.muscles %}
+                            <li>{{ muscle.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <a href="{{ path('app_groupemusculaire_update', {"id":groupeMusculaire.id}) }}"
+                       class="btn btn-primary btn-xs">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('app_groupemusculaire_delete', {"id":groupeMusculaire.id, "token":tokenGroupeMusculaire}) }}"
+                       class="btn btn-danger btn-xs">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

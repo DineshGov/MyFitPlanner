@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {#{% form_theme artisteForm 'bootstrap_3_layout.html.twig' %}#}
+    {#Dans config/package/twig.yaml#}
+
+    {% if 'app_groupemusculaire_create' == currentRoute %}
+        <h3>Creation d'un nouveau groupe musculaire</h3>
+    {% elseif 'app_groupemusculaire_update' == currentRoute %}
+        <h3>Modification du groupe {{ groupeMusculaire.name }}</h3>
+    {% endif %}
+
+    {{ form_start(groupeMusculaireForm) }}
+
+    {{ form_widget(groupeMusculaireForm) }}
+
+    <button class="btn btn-primary" type="submit">Envoyer</button>
+    {{ form_end(groupeMusculaireForm) }}
+
+{% endblock %}

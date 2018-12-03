@@ -1,0 +1,49 @@
+<div>
+    <h2>Exercices</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Groupes musculaires stimulés</th>
+            <th colspan="2">
+                <a href="{{ path('app_exercice_create') }}">Creation</a>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% set tokenExercice = csrf_token('EXERCICE_DELETE') %}
+        {% for exercice in exercices %}
+            <tr>
+                <td>{{ exercice.name }}</td>
+                <td>
+                    {% if exercice.description %}
+                        {{ exercice.description }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    <ul>
+                        {% for groupeMusculaire in exercice.groupesMusculaires %}
+                            <li>{{ groupeMusculaire.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <a href="{{ path('app_exercice_update', {"id":exercice.id}) }}"
+                       class="btn btn-primary btn-xs">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('app_exercice_delete', {"id":exercice.id, "token":tokenExercice}) }}"
+                       class="btn btn-danger btn-xs">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

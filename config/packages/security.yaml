@@ -2,12 +2,36 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory: { memory: ~ }
+
+        database:
+            entity:
+                class: App\Entity\User
+                property: email
+    encoders:
+        App\Entity\User: bcrypt
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
+            provider: database
+
+            form_login:
+                login_path: app_user_signin
+                #REDIRECTION SI NON CONNECTE
+                check_path: app_user_signin
+                #SERT DE ACTION A LA SOUMISSION DU FORMULAIRE. SI CREDENTIALS OK RETOURNE DANS LA ROUTE ET RENDER LA PAGE DU CAS SI DEJA CONNECTE
+                username_parameter: email
+                password_parameter: password
+                #always_use_default_target_path: true
+                #default_target_path: app_navigation_home
+                #csrf_parameter: _csrf_token
+                #csrf_token_id: authenticate
+                # https://symfony.com/doc/current/security/form_login_setup.html
+            logout:
+                path: app_user_logout
+                target: app_user_signin
 
             # activate different ways to authenticate
 
@@ -20,5 +44,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/seance, roles: IS_AUTHENTICATED_FULLY }

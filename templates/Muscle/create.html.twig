@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {#{% form_theme artisteForm 'bootstrap_3_layout.html.twig' %}#}
+    {#Dans config/package/twig.yaml#}
+
+    {% if 'app_muscle_create' == currentRoute %}
+        <h3>Creation d'un nouveau muscle</h3>
+    {% elseif 'app_muscle_update' == currentRoute %}
+        <h3>Modification du {{ muscle.name }}</h3>
+    {% endif %}
+
+    {{ form_start(muscleForm) }}
+
+    {{ form_widget(muscleForm) }}
+
+    <button class="btn btn-primary" type="submit">Envoyer</button>
+    {{ form_end(muscleForm) }}
+
+{% endblock %}

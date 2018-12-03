@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {#{% form_theme artisteForm 'bootstrap_3_layout.html.twig' %}#}
+    {#Dans config/package/twig.yaml#}
+
+
+    {% if 'app_seance_create' == currentRoute %}
+        <h3>Ajout d'une séance</h3>
+    {% elseif 'app_seance_update' == currentRoute %}
+        <h3>Modification de la seance du {{ seance.date|date('d/m/Y') }}</h3>
+    {% endif %}
+
+    {{ form_start(seanceForm) }}
+
+    {{ form_widget(seanceForm) }}
+
+    <button class="btn btn-primary" type="submit">Envoyer</button>
+    {{ form_end(seanceForm) }}
+
+{% endblock %}
